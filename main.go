@@ -59,7 +59,6 @@ func createEndPoint(w http.ResponseWriter, r *http.Request) {
 	var url myURL
 	err := json.NewDecoder(r.Body).Decode(&url)
 	if err != nil {
-		log.Println("called")
 		w.Header().Set("Access-Control-Allow-Origin", "*")
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
@@ -81,7 +80,6 @@ func createEndPoint(w http.ResponseWriter, r *http.Request) {
 	} else {
 		url = row
 	}
-	log.Println("called")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("X-Request-URL", "*")
 	json.NewEncoder(w).Encode(url)
@@ -106,9 +104,15 @@ func rootEndPoint(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	router := mux.NewRouter()
+	router.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, "client")
+		return
+	})
+	router.PathPrefix("/static/").Handler(http.StripPrefix("/static/", http.FileServer(http.Dir("client/static"))))
 	router.HandleFunc("/create", createEndPoint).Methods("POST")
 	router.HandleFunc("/expand/", expandEndPoint).Methods("GET")
 	router.HandleFunc("/{id}", rootEndPoint).Methods("GET")
+
 	fmt.Println("starting server at port http://localhost:8080")
 	log.Fatal(http.ListenAndServe(":8080", router))
 }

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Short URL</title>
+    <script src="https://fb.me/react-15.0.0.js"></script>
+      <script src="https://fb.me/react-dom-15.0.0.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js"></script>
+      <!-- <script src="http://localhost:8080/static/react.v15.js" charset="utf-8"></script>
+      <script src="http://localhost:8080/static/reactdom.v15.js" charset="utf-8"></script>
+      <script src="http://localhost:8080/static/browser.min.js" charset="utf-8"></script> -->
+  </head>
+  <body>
+      <div id="root">
+
+      </div>
+  </body>
+  <script type="text/babel">
+  var Home = React.createClass({
+    getInitialState:function () {
+      return {value:'',short:''};
+    },
+    handleSubmit:function (event) {
+      event.preventDefault();
+      var data = fetch('http://localhost:8080/create', {
+        method: 'POST',
+        body: JSON.stringify({
+          longurl: this.state.value,
+        })
+      }).then(function(response) {
+        return response.json()
+      }).then(function(json) {
+        return json
+      }).catch(function(error) {
+        console.log('request failed', error)
+      })
+      data.then(response => {
+        this.setState({short: response.shorturl});
+      });
+    },
+    handleChange:function (event) {
+      this.setState({value: event.target.value});
+    },
+    render:function(){
+      return (
+        <div>
+        <form onSubmit={this.handleSubmit}>
+        <label>
+        Name:
+        <input type="text" value={this.state.value} onChange={this.handleChange} />
+        </label>
+        <input type="submit" value="Submit" />
+        <p> <a href={this.state.short}>{this.state.short}</a></p>
+        </form>
+        </div>
+      )
+    }
+  });
+    ReactDOM.render(
+      <Home/>,
+      document.getElementById('root')
+    );
+  </script>
+</html>

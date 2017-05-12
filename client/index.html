@@ -6,59 +6,81 @@
     <script src="https://fb.me/react-15.0.0.js"></script>
       <script src="https://fb.me/react-dom-15.0.0.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js"></script>
+      <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+      <!-- Local use  -->
       <!-- <script src="http://localhost:8080/static/react.v15.js" charset="utf-8"></script>
       <script src="http://localhost:8080/static/reactdom.v15.js" charset="utf-8"></script>
-      <script src="http://localhost:8080/static/browser.min.js" charset="utf-8"></script> -->
-  </head>
+      <script src="http://localhost:8080/static/browser.min.js" charset="utf-8"></script>
+      <link rel="stylesheet" href="http://localhost:8080/static/bootstrap.min.css"> -->
+      </head>
   <body>
-      <div id="root">
+
+      <div id="root" class="container">
 
       </div>
-  </body>
-  <script type="text/babel">
-  var Home = React.createClass({
-    getInitialState:function () {
-      return {value:'',short:''};
-    },
-    handleSubmit:function (event) {
-      event.preventDefault();
-      var data = fetch('http://localhost:8080/create', {
-        method: 'POST',
-        body: JSON.stringify({
-          longurl: this.state.value,
-        })
-      }).then(function(response) {
-        return response.json()
-      }).then(function(json) {
-        return json
-      }).catch(function(error) {
-        console.log('request failed', error)
-      })
-      data.then(response => {
-        this.setState({short: response.shorturl});
+      <style media="screen">
+
+      </style>
+      <script type="text/babel">
+      var Home = React.createClass({
+        getInitialState:function () {
+          return {value:'',short:''};
+        },
+        handleSubmit:function (event) {
+          event.preventDefault();
+          var data = fetch('http://localhost:8080/create', {
+            method: 'POST',
+            body: JSON.stringify({
+              longurl: this.state.value,
+            })
+          }).then(function(response) {
+            return response.json()
+          }).then(function(json) {
+            return json
+          }).catch(function(error) {
+            console.log('request failed', error)
+          })
+          data.then(response => {
+            this.setState({short: response.shorturl});
+          });
+        },
+        handleChange:function (event) {
+          this.setState({value: event.target.value});
+        },
+        render:function(){
+          return (
+            <div >
+            <h3>URL shortner</h3>
+            <form onSubmit={this.handleSubmit}>
+
+            <div className="form-group">
+              <input placeholder="Long url.." className="form-control" type="text" value={this.state.value} onChange={this.handleChange} />
+            </div>
+
+            <input className="btn  btn-success" type="submit" value="Get ShortURL" />
+            </form>
+            <br/>
+            {this.state.short != '' &&
+            <div className="card">
+              <div className="card-header">
+              ShortURL
+              </div>
+              <div className="card-block">
+              <blockquote className="card-blockquote">
+                <p>  <p><a href={this.state.short}>{this.state.short}</a></p></p>
+                <footer>Powered by  <cite title="Source Title">Golang and React</cite></footer>
+              </blockquote>
+            </div>
+          </div>
+          }
+            </div>
+          )
+        }
       });
-    },
-    handleChange:function (event) {
-      this.setState({value: event.target.value});
-    },
-    render:function(){
-      return (
-        <div>
-        <form onSubmit={this.handleSubmit}>
-        <label>
-        Name:
-        <input type="text" value={this.state.value} onChange={this.handleChange} />
-        </label>
-        <input type="submit" value="Submit" />
-        <p> <a href={this.state.short}>{this.state.short}</a></p>
-        </form>
-        </div>
-      )
-    }
-  });
-    ReactDOM.render(
-      <Home/>,
-      document.getElementById('root')
-    );
-  </script>
+        ReactDOM.render(
+          <Home/>,
+          document.getElementById('root')
+        );
+      </script>
+  </body>
 </html>

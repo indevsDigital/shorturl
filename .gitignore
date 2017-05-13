@@ -22,4 +22,8 @@ _testmain.go
 *.exe
 *.test
 *.prof
-static
+reactdom.v15.js
+browser.min.js
+react.v15.js
+reactdom.v15.js
+bootstrap.min.css

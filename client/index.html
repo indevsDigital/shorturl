@@ -6,7 +6,7 @@
     <script src="https://fb.me/react-15.0.0.js"></script>
       <script src="https://fb.me/react-dom-15.0.0.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js"></script>
-      <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
       <!-- Local use  -->
       <!-- <script src="http://localhost:8080/static/react.v15.js" charset="utf-8"></script>
       <script src="http://localhost:8080/static/reactdom.v15.js" charset="utf-8"></script>
@@ -68,15 +68,13 @@
               </div>
               <div className="card-block">
               <blockquote className="card-blockquote">
-                <p><a href={this.state.short}>{this.state.short}</a></p>
+                <p> <a href={this.state.short}>{this.state.short}</a></p>
                 <footer>Powered by  <cite title="Source Title">Golang and React</cite></footer>
               </blockquote>
             </div>
           </div>
           }
-          {this.state.error =! '' &&
-          <p>{this.state.error}</p>
-          }
+
             </div>
           )
         }

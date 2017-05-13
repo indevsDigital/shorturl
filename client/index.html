@@ -24,7 +24,7 @@
       <script type="text/babel">
       var Home = React.createClass({
         getInitialState:function () {
-          return {value:'',short:''};
+          return {value:'',short:'',error:''};
         },
         handleSubmit:function (event) {
           event.preventDefault();
@@ -39,6 +39,7 @@
             return json
           }).catch(function(error) {
             console.log('request failed', error)
+            this.setState({error:error})
           })
           data.then(response => {
             this.setState({short: response.shorturl});
@@ -67,11 +68,14 @@
               </div>
               <div className="card-block">
               <blockquote className="card-blockquote">
-                <p>  <p><a href={this.state.short}>{this.state.short}</a></p></p>
+                <p><a href={this.state.short}>{this.state.short}</a></p>
                 <footer>Powered by  <cite title="Source Title">Golang and React</cite></footer>
               </blockquote>
             </div>
           </div>
+          }
+          {this.state.error =! '' &&
+          <p>{this.state.error}</p>
           }
             </div>
           )

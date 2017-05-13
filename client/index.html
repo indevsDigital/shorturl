@@ -28,6 +28,7 @@
         },
         handleSubmit:function (event) {
           event.preventDefault();
+          // TODO handle errors better
           var data = fetch('http://localhost:8080/create', {
             method: 'POST',
             body: JSON.stringify({
@@ -39,7 +40,6 @@
             return json
           }).catch(function(error) {
             console.log('request failed', error)
-            this.setState({error:error})
           })
           data.then(response => {
             this.setState({short: response.shorturl});

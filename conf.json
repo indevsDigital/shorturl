@@ -1,0 +1,7 @@
+{
+  "httpport":"8080",
+  "db_user":"",
+  "db_name":"shorturl",
+  "db_host":"127.0.0.1:3306",
+  "db_password":""
+}

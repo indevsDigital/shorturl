@@ -16,13 +16,16 @@ import (
 
 var db *sql.DB
 var err error
+var c = NewConfig()
 
 func init() {
-	// create a sql connect
-	db, err = sql.Open("mysql", "root:duncan@tcp(127.0.0.1:3306)/shorturl")
+	connectionsttring := c.DBUser + ":" + c.DBPassword + "@tcp(" + c.DBHost + ")/" + c.DBName
+	log.Println(connectionsttring)
+	db, err = sql.Open("mysql", connectionsttring)
 	if err != nil {
 		log.Fatal(err)
 	}
+	_, err = db.Exec(`create database if not exists shorturl`)
 	_, err = db.Exec(`create table if not exists shorturl (id int NOT NULL AUTO_INCREMENT,dataid varchar(100),short_url varchar(100),long_url varchar(255),primary key(id))`)
 	if err != nil {
 		log.Fatal(err)
@@ -114,5 +117,5 @@ func main() {
 	router.HandleFunc("/{id}", rootEndPoint).Methods("GET")
 
 	fmt.Println("starting server at port http://localhost:8080")
-	log.Fatal(http.ListenAndServe(":8080", router))
+	log.Fatal(http.ListenAndServe(":"+c.Httpport, router))
 }

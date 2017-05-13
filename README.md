@@ -18,7 +18,8 @@ Edit database credentials
 Install
 
 ```
- go install
+cd $GOPATH/src/github.com/indevsDigital/shorturl
+go install
  ```
  Run the binary in project dir to server the index.html file
 ```

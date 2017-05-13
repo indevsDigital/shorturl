@@ -8,6 +8,13 @@ go get github.com/indevsDigital/shorturl
 
 ```
 
+Edit database credentials
+```
+{
+ "db_user":"mysql username",
+ "db_password":"mysql password"
+}
+```
 Install
 
 ```
